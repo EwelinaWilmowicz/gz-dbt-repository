@@ -1,6 +1,7 @@
 with sales_margin as (
 
-    select {{ ref ('int_sales_margin')}}
+    select*
+    from {{ ref ('int_sales_margin')}}
 
 ), 
 
@@ -18,3 +19,6 @@ orders_margin as (
     GROUP BY orders_id
 
 )
+
+select *
+from orders_margin

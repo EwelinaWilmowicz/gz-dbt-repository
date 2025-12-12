@@ -4,10 +4,65 @@ sources:
   - name: raw
     database: starry-journal-476210-j1
     schema: gz_raw_data
+    description: Greenweez raw data (product, ship and sales) uploaded in BigQuery.
     tables:
-      - name: sales 
+      - name: sales
         identifier: raw_gz_sales
+        description: Sales of Greenweez. One row per product_id found in each orders_id
+        
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+
+        freshness:
+          warn_after:
+            count: 90
+            period: day
+        columns:
+          - name: date_date
+            description: Date of purchase
+          - name: orders_id
+            description: Order identifier
+            tests:
+              - not_null
+          - name: pdt_id
+            description: Product identifier sold for the line
+            tests:
+              - not_null
+          - name: revenue
+            description: Revenue for the line
+          - name: quantity
+            description: Quantity sold for this line
+        tests:
+          - unique:
+              column_name: "concat(cast(orders_id as string), '-', cast(pdt_id as string))"
+
       - name: product
-        identifier: raw_gz_product 
+        identifier: raw_gz_product
+        description: Products from Greenweez portfolio
+        columns:
+          - name: products_id
+            description: Identifier of the product
+            tests:
+              - not_null
+              - unique
+          - name: purchse_price
+            description: Purchase price of the product (raw column name contains a typo)
+
       - name: ship
-        identifier: raw_gz_ship 
+        identifier: raw_gz_ship
+        description: Shipping information for the order
+        columns:
+          - name: orders_id
+            description: Order identifier
+            tests:
+              - not_null
+              - unique
+          - name: shipping_fee
+            description: Shipping fee charged to the line of order 
+          - name: shipping_fee_1
+            description: Duplication of shipping_fee (compared with shipping_fee in Big Query)
+          - name: logCost
+            description: Logistic Costs for the line of order 
+          - name: ship_cost
+            description: Shipping cost for the line of order  
+
+

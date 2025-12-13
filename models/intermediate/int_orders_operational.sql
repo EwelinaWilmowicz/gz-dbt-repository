@@ -39,18 +39,5 @@ final as (
 
 )
 
-final as (
-
-    select
-        orders_id,
-        date_date,
-        margin
-          + shipping_fee
-          - logcost
-          - ship_cost as operational_margin
-    from joined
-
-)
-
 select *
 from final

@@ -64,5 +64,141 @@ sources:
             description: Logistic Costs for the line of order 
           - name: ship_cost
             description: Shipping cost for the line of order  
+models:
+  - name: int_orders_margin
+    description: Margin and revenue aggregated at order level
+    columns:
+      - name: orders_id
+        description: Unique identifier of the order
+        tests:
+          - not_null
+          - unique
 
+      - name: date_date
+        description: Date of the order
+        tests:
+          - not_null
 
+      - name: revenue
+        description: Total revenue for the order
+        tests:
+          - not_null
+
+      - name: quantity
+        description: Total quantity of products in the order
+        tests:
+          - not_null
+
+      - name: purchase_cost
+        description: Total purchase cost for the order
+        tests:
+          - not_null
+
+      - name: margin
+        description: Margin for the order
+        tests:
+          - not_null 
+  - name: int_orders_operational
+    description: Operational margin aggregated at order level
+    columns:
+      - name: orders_id
+        description: Unique identifier of the order
+        tests:
+          - not_null
+          - unique
+
+      - name: date_date
+        description: Date of the order
+        tests:
+          - not_null
+
+      - name: operational_margin
+        description: Operational margin calculated as margin + shipping fee - log cost - ship cost for the order
+        tests:
+          - not_null
+  - name: int_sales_margin
+    description: Margin calculated per product per order
+    columns:
+      - name: orders_id
+        description: Order identifier
+        tests:
+          - not_null
+
+      - name: products_id
+        description: Product identifier
+        tests:
+          - not_null
+
+      - name: date_date
+        description: Date of the order
+        tests:
+          - not_null
+
+      - name: quantity
+        description: Quantity of the product sold
+        tests:
+          - not_null
+
+      - name: revenue
+        description: Revenue for the product line
+        tests:
+          - not_null
+
+      - name: purchase_cost
+        description: Purchase cost for the product line
+        tests:
+          - not_null
+
+      - name: margin
+        description: Margin for the product line
+        tests:
+          - not_null
+
+  - name: finance_days
+    description: Daily finance metrics for Greenweez (transactions, revenue, basket, costs and margins)
+    columns:
+      - name: date
+        description: Day
+        tests:
+          - not_null
+          - unique
+
+      - name: total_transactions
+        description: Total number of transactions (orders) per day
+        tests:
+          - not_null
+
+      - name: total_revenue
+        description: Total revenue per day
+        tests:
+          - not_null
+
+      - name: average_basket
+        description: Average basket value per day (total_revenue / total_transactions)
+        tests:
+          - not_null
+
+      - name: operational_margin
+        description: Total operational margin per day
+        tests:
+          - not_null
+
+      - name: total_purchase_cost
+        description: Total purchase cost per day
+        tests:
+          - not_null
+
+      - name: total_shipping_fees
+        description: Total shipping fees paid by customers per day
+        tests:
+          - not_null
+
+      - name: total_log_costs
+        description: Total logistics costs per day
+        tests:
+          - not_null
+
+      - name: total_quantity_sold
+        description: Total quantity of products sold per day
+        tests:
+          - not_null

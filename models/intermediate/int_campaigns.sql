@@ -60,14 +60,5 @@ unioned as (
     select * from facebook
 )
 
-select
-    date_date,
-    paid_source,
-    campaign_id,
-    concat(source, '-', campaign_id) as campaign_pk,
-    campaign_name,
-    source,
-    ads_cost,
-    impression,
-    click
+select *
 from unioned

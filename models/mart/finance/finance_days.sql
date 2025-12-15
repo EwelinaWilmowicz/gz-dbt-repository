@@ -31,6 +31,7 @@ joined as (
 
         ship.shipping_fee,
         ship.logcost,
+        ship.ship_cost,
 
         orders_operational.operational_margin
 
@@ -50,10 +51,11 @@ finance_days as (
         sum(purchase_cost) as total_purchase_cost,
         sum(coalesce(shipping_fee, 0)) as total_shipping_fees,
         sum(coalesce(logcost, 0)) as total_log_costs,
+        sum(coalesce(ship_cost, 0)) as ship_cost,
         sum(coalesce(quantity, 0)) as total_quantity_sold
-
     from joined
     group by date_date
+
 )
 
 select *

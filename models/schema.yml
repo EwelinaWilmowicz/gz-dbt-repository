@@ -215,39 +215,112 @@ models:
         tests:
           - not_null
   - name: int_campaigns
-    description: Unified campaigns from all paid platforms.
+    description: Unified campaigns from all paid platforms
     columns:
       - name: campaign_id
-        description: Campaign identifier from the source platform.
+        description: Campaign identifier from the source platform
         tests:
           - not_null
 
       - name: source
-        description: Ad platform source.
+        description: Ad platform source
         tests:
           - not_null
           - accepted_values:
               values: ['adwords', 'bing', 'criteo', 'facebook']
   - name: int_campaigns_day
-    description: Daily aggregated paid campaign metrics (summed across all platforms)
+    description: Daily aggregated paid campaign metrics summed across all advertising platforms
     columns:
       - name: date_date
-        description: Day of the marketing performance
+        description: Day of the advertising performance
         tests:
           - not_null
           - unique
 
       - name: ads_cost
-        description: Total ad spend for the day across all platforms
+        description: Total advertising cost per day across all platforms
         tests:
           - not_null
 
       - name: impression
-        description: Total impressions for the day across all platforms
+        description: Total number of ad impressions per day across all platforms
         tests:
           - not_null
 
       - name: click
-        description: Total clicks for the day across all platforms
+        description: Total number of ad clicks per day across all platforms
+        tests:
+          - not_null
+  - name: finance_campaigns_day
+    description: Daily finance metrics joined with daily paid campaign metrics, including ads_margin (operational_margin - ads_cost)
+    columns:
+      - name: date
+        description: Day
+        tests:
+          - not_null
+          - unique
+
+      - name: ads_margin
+        description: Ads margin calculated as operational_margin - ads_cost
+        tests:
+          - not_null
+
+      - name: average_basket
+        description: Average basket value per day (revenue / total_transactions)
+        tests:
+          - not_null
+
+      - name: operational_margin
+        description: Total operational margin per day
+        tests:
+          - not_null
+
+      - name: ads_cost
+        description: Total ad spend per day across all platforms
+        tests:
+          - not_null
+
+      - name: ads_impression
+        description: Total ad impressions per day across all platforms
+        tests:
+          - not_null
+
+      - name: ads_clicks
+        description: Total ad clicks per day across all platforms
+        tests:
+          - not_null
+
+      - name: quantity
+        description: Total quantity sold per day
+        tests:
+          - not_null
+
+      - name: revenue
+        description: Total revenue per day
+        tests:
+          - not_null
+
+      - name: purchase_cost
+        description: Total purchase cost per day
+        tests:
+          - not_null
+
+      - name: margin
+        description: Gross margin per day (revenue - purchase_cost)
+        tests:
+          - not_null
+
+      - name: shipping_fee
+        description: Total shipping fees per day
+        tests:
+          - not_null
+
+      - name: log_cost
+        description: Total logistics costs per day
+        tests:
+          - not_null
+
+      - name: ship_cost
+        description: Total shipping costs per day
         tests:
           - not_null

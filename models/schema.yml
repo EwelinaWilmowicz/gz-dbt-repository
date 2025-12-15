@@ -64,6 +64,18 @@ sources:
             description: Logistic Costs for the line of order 
           - name: ship_cost
             description: Shipping cost for the line of order  
+      - name: adwords
+        identifier: raw_gz_adwords
+        description: Marketing results from adwords
+      - name: bing
+        identifier: raw_gz_bing
+        description: Marketing results from bing
+      - name: criteo
+        identifier: raw_gz_criteo
+        description: Marketing results from criteo
+      - name: facebook
+        identifier: raw_gz_facebook
+        description: Marketing results from facebook
 models:
   - name: int_orders_margin
     description: Margin and revenue aggregated at order level

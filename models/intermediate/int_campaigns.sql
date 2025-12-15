@@ -2,8 +2,9 @@ with adwords as (
     select
         date_date,
         paid_source,
-        campaign_key,
+        cast(campaign_key as string) as campaign_id,
         campaign_name,
+        'adwords' as source,
         cast(ads_cost as float64) as ads_cost,
         cast(impression as int64) as impression,
         cast(click as int64) as click
@@ -14,8 +15,9 @@ bing as (
     select
         date_date,
         paid_source,
-        campaign_key,
+        cast(campaign_key as string) as campaign_id,
         campaign_name,
+        'bing' as source,
         cast(ads_cost as float64) as ads_cost,
         cast(impression as int64) as impression,
         cast(click as int64) as click
@@ -26,8 +28,9 @@ criteo as (
     select
         date_date,
         paid_source,
-        campaign_key,
+        cast(campaign_key as string) as campaign_id,
         campaign_name,
+        'criteo' as source,
         cast(ads_cost as float64) as ads_cost,
         cast(impression as int64) as impression,
         cast(click as int64) as click
@@ -38,8 +41,9 @@ facebook as (
     select
         date_date,
         paid_source,
-        campaign_key,
+        cast(campaign_key as string) as campaign_id,
         campaign_name,
+        'facebook' as source,
         cast(ads_cost as float64) as ads_cost,
         cast(impression as int64) as impression,
         cast(click as int64) as click
@@ -56,5 +60,14 @@ unioned as (
     select * from facebook
 )
 
-select *
+select
+    date_date,
+    paid_source,
+    campaign_id,
+    concat(source, '-', campaign_id) as campaign_pk,
+    campaign_name,
+    source,
+    ads_cost,
+    impression,
+    click
 from unioned

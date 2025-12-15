@@ -324,3 +324,76 @@ models:
         description: Total shipping costs per day
         tests:
           - not_null
+  - name: finance_campaigns_month
+    description: Monthly aggregated finance metrics joined with monthly paid campaign metrics, including ads_margin
+    columns:
+      - name: datemonth
+        description: Month (first day of month)
+        tests:
+          - not_null
+          - unique
+
+      - name: ads_margin
+        description: Ads margin per month (operational_margin - ads_cost)
+        tests:
+          - not_null
+
+      - name: average_basket
+        description: Average basket per month (revenue / total_transactions)
+        tests:
+          - not_null
+
+      - name: operational_margin
+        description: Total operational margin per month
+        tests:
+          - not_null
+
+      - name: ads_cost
+        description: Total ad spend per month across all platforms
+        tests:
+          - not_null
+
+      - name: ads_impression
+        description: Total ad impressions per month across all platforms
+        tests:
+          - not_null
+
+      - name: ads_clicks
+        description: Total ad clicks per month across all platforms
+        tests:
+          - not_null
+
+      - name: quantity
+        description: Total quantity sold per month
+        tests:
+          - not_null
+
+      - name: revenue
+        description: Total revenue per month
+        tests:
+          - not_null
+
+      - name: purchase_cost
+        description: Total purchase cost per month
+        tests:
+          - not_null
+
+      - name: margin
+        description: Gross margin per month (revenue - purchase_cost)
+        tests:
+          - not_null
+
+      - name: shipping_fee
+        description: Total shipping fees per month
+        tests:
+          - not_null
+
+      - name: log_cost
+        description: Total logistics costs per month
+        tests:
+          - not_null
+
+      - name: ship_cost
+        description: Total shipping costs per month
+        tests:
+          - not_null

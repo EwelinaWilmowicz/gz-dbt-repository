@@ -214,3 +214,34 @@ models:
         description: Total quantity of products sold per day
         tests:
           - not_null
+  - name: int_campaigns
+    description:  Unified ad campaigns from all platforms (UNION ALL of staging campaign models)
+    columns:
+      - name: campaign_id
+        description: Unique identifier of the campaign (should be unique across platforms)
+        tests:
+          - not_null
+          - unique
+
+      - name: campaign_name
+        description: Campaign name in the source platform
+        tests:
+          - not_null
+
+      - name: source
+        description: Source platform name
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['adwords', 'bing', 'criteo', 'facebook']  
+
+      - name: date_date
+        description: Date of campaign metrics (if present)
+        tests:
+          - not_null
+
+      - name: paid_source
+        description: Paid source / channel (if present)
+
+      - name: campaign_type
+        description: Campaign type (if present)

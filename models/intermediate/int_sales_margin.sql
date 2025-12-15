@@ -9,19 +9,30 @@ product as (
 
     select *
     from{{ ref ('stg_raw__product') }}
+),
+
+calc as (
+  select
+    s.date_date,
+    s.orders_id,
+    s.products_id,
+    s.quantity,
+    cast(s.revenue as float64) as revenue,
+    p.purchase_price,
+    cast(s.quantity as int64) * cast(p.purchase_price as float64) as purchase_cost
+  from sales s
+  left join product p
+    on s.products_id = p.products_id
 )
 
 select
-    sales.date_date,
-    sales.orders_id,
-    sales.products_id,
-    sales.quantity,
-    sales.revenue,
-    product.purchase_price,
-    cast(sales.quantity as int64) * cast(product.purchase_price as float64) as purchase_cost,
-    cast(sales.revenue as float64)
-      - (cast(sales.quantity as int64) * cast(product.purchase_price as float64)) as margin
-from sales
-left join product
-   on sales.products_id = product.products_id
-   
+  date_date,
+  orders_id,
+  products_id,
+  quantity,
+  revenue,
+  purchase_price,
+  purchase_cost,
+  revenue - purchase_cost as margin,
+  {{ margin_percent('revenue', 'purchase_cost') }} as margin_percent
+from calc
